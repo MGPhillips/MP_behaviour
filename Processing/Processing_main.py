@@ -61,6 +61,32 @@ class Processing:
         if 'processing' not in self.tracking_data.__dict__.keys():
             setattr(self.tracking_data, 'processing', {})
 
+    def apply_fisheye_correction(self):
+
+
+        if registration[3]: # setup fisheye correction (registration[3] is the file location of the fisheye_maps.npy)
+            maps = np.load(registration[3])
+            map1 = maps[:, :, 0:2]
+            map2 = maps[:, :, 2] * 0
+        else:
+            print(colored('Fisheye correction unavailable', 'green'))
+        # RUN SAVING AND ANALYSIS OVER EACH FRAME - ######################################
+        while True: #and not file_already_exists:
+            ret, frame = vid.read()  # get the frame
+            if ret:
+                frame_num = vid.get(cv2.CAP_PROP_POS_FRAMES)
+                if [registration]:
+                    # load the fisheye correction
+                    frame_register = frame[:, :, 0]
+                    if registration[3]:
+                        frame_register = cv2.copyMakeBorder(frame_register, x_offset, int((map1.shape[0] - frame.shape[0]) - x_offset),
+                                                            y_offset, int((map1.shape[1] - frame.shape[1]) - y_offset), cv2.BORDER_CONSTANT, value=0)
+                        frame_register = cv2.remap(frame_register, map1, map2, interpolation=cv2.INTER_LINEAR,
+                                                    borderMode=cv2.BORDER_CONSTANT, borderValue=0)
+                        frame_register = frame_register[x_offset:-int((map1.shape[0] - frame.shape[0]) - x_offset),
+                                                        y_offset:-int((map1.shape[1] - frame.shape[1]) - y_offset)]
+
+
     @clock  # times the execution of a function
     def extract_location_relative_shelter(self):
         """ Extracts the mouse position relative to the shelter """
