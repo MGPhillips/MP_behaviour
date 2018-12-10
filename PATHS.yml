@@ -1,0 +1,4 @@
+datalog: 'C:\Users\matthewp.W221N\Documents\GitHub\FC_analysis\datalog_dwm.xls'
+save fld: 'C:\Users\matthewp.W221N\Documents\analysis'
+DLC folder: 'C:\Users\matthewp.W221N\Documents\GitHub\DeepLabCut'
+DLC env folder : 'C:\Users\matthewp.W221N\Anaconda3\envs\DLCdependencies_MP'
