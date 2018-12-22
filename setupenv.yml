@@ -1,4 +1,4 @@
-name: analysis_MP
+name: MP_behaviour
 channels:
   - menpo
   - cogsci
@@ -121,5 +121,5 @@ dependencies:
   - wheel=0.30.0=py35h38a90bc_1
   - win_inet_pton=1.0.1=py35hbef1270_1
   - wincertstore=0.2=py35hfebbdb8_0
-prefix: C:\Users\matthewp.W221N\Anaconda3\envs\analysis_MP
+prefix: C:\Users\matthewp.W221N\Anaconda3\envs\MP_behaviour
 
