@@ -28,6 +28,7 @@ class Tracking():
     """
     def __init__(self, session, TF_setup, TF_settings, clips_l):
         # set up class variables
+        print('INITIATING TRACKING')
         self.session = session
 
         # TF set up -- check if TF is running already
@@ -37,6 +38,7 @@ class Tracking():
 
         # Load settings from config
         self.cfg = load_yaml(track_options['cfg_std'])
+        self.cfg_cc = load_yaml(track)
         self.dlc_config_settings = load_yaml(track_options['cfg_dlc'])
         self.dlc_config_settings['clips'] = {'visual': {}, 'audio': {}, 'digital': {}}
 
@@ -66,6 +68,9 @@ class Tracking():
         if not isinstance(self.session['Tracking'], dict):
             self.session['Tracking'] = {}
 
+        if track_options['use_common_coordinate']:
+            self.common_coordinate()
+
         # Track exploration
         if track_options['track_exploration']:
             self.track_exploration()
@@ -80,6 +85,22 @@ class Tracking():
         # Track single trials
         if track_options['track_mouse_fast']:
             self.track_trials()
+
+    def common_coordinate(self):
+        print('PAUSE HERE INSIDE COMMON COORD')
+        print('Entering common coordinate')
+        print(self.session['Metadata'])
+
+
+        if track_options['use_common_coordinate']:
+            import CommonCoordinate.Register_and_show_flight as common_coord
+            self.session['Metadata'].video_file_paths
+            ### TODO: Complete the video path with common coordinate section
+
+            for session_name in tqdm(sorted(self.db.index)):
+                session = self.db.loc[session_name]
+
+                print('MANUAL CROPPING SESSION', session)
 
     @clock
     def track_exploration(self):
